@@ -1,71 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IoT Room Monitor | Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<title>IoT Room Monitor | Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+  background:#f2f3f5;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar{
+  background:rgb(173, 212, 252);
+}
+
+/* Section title */
+.section-title{
+  font-weight:600;
+  color:#000000;
+}
+
+/* Status cards */
+.status-card{
+  background:rgb(174, 216, 182);
+  border-radius:12px;
+  padding:30px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  transition:0.2s;
+}
+
+.status-card:hover{
+  transform:translateY(-3px);
+}
+
+/* Labels */
+.label{
+  font-size:14px;
+  color:#242424;
+  margin-bottom:10px;
+}
+
+/* Values */
+.value{
+  font-size:38px;
+  font-weight:bold;
+}
+
+/* Temperature color */
+.temp{
+  color:#f30909;
+}
+
+/* Status colors */
+.on{
+  color:#28a745;
+}
+
+.off{
+  color:#dc3545;
+}
+
+/* Refresh button */
+.refresh-btn{
+  padding:10px 30px;
+  font-weight:500;
+  border-radius:8px;
+}
+
+</style>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg bg-light shadow-sm py-3">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg shadow-sm py-3">
   <div class="container">
-    <a class="navbar-brand fw-bold fs-4" href="dashboard.html">IoT Room Monitor</a>
+
+    <a class="navbar-brand fw-bold fs-4" href="dashboard.html">
+      IoT Room Monitor
+    </a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+
         <li class="nav-item">
-          <a class="nav-link active" href="dashboard.html">Dashboard</a>
+          <a class="nav-link active fw-semibold" href="dashboard.html">Dashboard</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="logs.html">Logs</a>
         </li>
+
       </ul>
     </div>
+
   </div>
 </nav>
 
+<!-- Dashboard -->
 <section class="container my-5">
-  <h2 class="text-center mb-4">Room Status</h2>
 
-  <div class="row g-4 justify-content-center">
+<h2 class="text-center mb-5 section-title">Room Status</h2>
 
-  
-    <div class="col-12 col-md-4">
-      <div class="status-card text-center">
-        <p class="label">Temperature</p>
-        <h1 id="temp">-- °C</h1>
-      </div>
-    </div>
+<div class="row g-4 justify-content-center">
 
-    
-    <div class="col-12 col-md-4">
-      <div class="status-card text-center">
-        <p class="label">Air Conditioner</p>
-        <h1 id="acStatus">--</h1>
-      </div>
-    </div>
+<!-- Temperature -->
+<div class="col-12 col-md-4">
+<div class="status-card text-center">
 
-    <div class="col-12 col-md-4">
-      <div class="status-card text-center">
-        <p class="label">Exhaust Fan</p>
-        <h1 id="fanStatus">--</h1>
-      </div>
-    </div>
+<p class="label">🌡 Temperature</p>
 
-  </div>
+<h1 class="value temp" id="temp">
+-- °C
+</h1>
 
-  <div class="text-center mt-4">
-    <button class="btn btn-success px-4" id="refreshBtn">Refresh</button>
-  </div>
+</div>
+</div>
+
+<!-- Aircon -->
+<div class="col-12 col-md-4">
+<div class="status-card text-center">
+
+<p class="label">❄ Air Conditioner</p>
+
+<h1 class="value" id="acStatus">
+--
+</h1>
+
+</div>
+</div>
+
+<!-- Exhaust -->
+<div class="col-12 col-md-4">
+<div class="status-card text-center">
+
+<p class="label">🌀 Exhaust Fan</p>
+
+<h1 class="value" id="fanStatus">
+--
+</h1>
+
+</div>
+</div>
+
+</div>
+
+<!-- Refresh Button -->
+<div class="text-center mt-5">
+
+<button class="btn btn-success refresh-btn" id="refreshBtn">
+Refresh Data
+</button>
+
+</div>
+
 </section>
 
 <script src="dashboard.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
