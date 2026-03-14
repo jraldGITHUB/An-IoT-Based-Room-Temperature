@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>IoT Room Monitor | Logs</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
+
+<!-- NAVBAR -->
+
 <nav class="navbar navbar-expand-lg bg-light shadow-sm py-3">
+
 <div class="container">
-<a class="navbar-brand fw-bold fs-4" href="index.html">IoT Room Monitor</a>
+
+<a class="navbar-brand fw-bold fs-4" href="Web.html">
+IoT Room Monitor
+</a>
 
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
 <span class="navbar-toggler-icon"></span>
 </button>
 
 <div class="collapse navbar-collapse" id="navbarNav">
+
 <ul class="navbar-nav ms-auto">
 
 <li class="nav-item">
@@ -31,17 +42,19 @@
 </li>
 
 </ul>
+
 </div>
+
 </div>
+
 </nav>
+
+
+<!-- LOG TABLE -->
 
 <section class="container my-5">
 
-<h2 class="text-center mb-2">Temperature & Aircon Logs</h2>
-
-<h6 class="text-center mb-4">
-Total Logs: <span id="logCount">0</span>
-</h6>
+<h2 class="text-center mb-4">Temperature & Aircon Logs</h2>
 
 <div class="table-responsive">
 
@@ -52,6 +65,7 @@ Total Logs: <span id="logCount">0</span>
 <tr>
 <th>Date</th>
 <th>Time</th>
+<th>Room</th>
 <th>Room Temp (°C)</th>
 <th>Exhaust Temp (°C)</th>
 <th>Aircon Status</th>
@@ -60,17 +74,24 @@ Total Logs: <span id="logCount">0</span>
 
 </thead>
 
-<tbody id="logTable"></tbody>
+<tbody id="logTable">
+
+</tbody>
 
 </table>
 
 </div>
 
+
+<!-- ACTION BUTTONS -->
+
 <div class="text-center mt-4">
 
-<br>
+<button class="btn btn-success" onclick="downloadCSV()">
+Download CSV
+</button>
 
-<button class="btn btn-danger" id="clearLogs">
+<button class="btn btn-danger ms-2" id="clearLogs">
 Clear Logs
 </button>
 
@@ -78,7 +99,9 @@ Clear Logs
 
 </section>
 
+
 <script src="logs.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
