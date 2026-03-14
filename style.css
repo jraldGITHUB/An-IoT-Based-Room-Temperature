@@ -85,3 +85,26 @@ body{
 canvas{
   max-height:300px;
 }
+
+#map{
+height:400px;
+width:100%;
+margin-top:20px;
+border-radius:10px;
+}
+
+.status-card{
+padding:25px;
+border-radius:10px;
+background:white;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.value{
+font-size:32px;
+font-weight:bold;
+}
+
+.label{
+font-size:18px;
+}
