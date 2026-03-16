@@ -107,6 +107,18 @@ alert("Selected "+r.name);
 
 });
 
+function checkRuntime(runtime){
+
+if(runtime >= 1){
+
+fetch("send_email.php")
+.then(response => response.text())
+.then(data => console.log(data));
+
+}
+
+}
+
 
 function updateStatus(){
 
