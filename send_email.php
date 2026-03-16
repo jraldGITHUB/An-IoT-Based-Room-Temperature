@@ -1,23 +1,40 @@
 <?php
 
-function sendAlert($room,$runtime){
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-$to = "admin@email.com";
-$subject = "Aircon Runtime Alert";
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
+require 'PHPMailer-master/src/Exception.php';
 
-$message = "
-Aircon Runtime Warning
+$mail = new PHPMailer(true);
 
-Room: $room
-Runtime: $runtime
+try {
 
-The air conditioner has been running for more than 4 hours.
-";
+$mail->isSMTP();
+$mail->Host = 'smtp.gmail.com';
+$mail->SMTPAuth = true;
 
-$headers = "From: yourgmail@gmail.com";
+$mail->Username = 'jraldybaco@gmail.com';
+$mail->Password = 'lkubyxyqvnwdfzmk';
 
-mail($to,$subject,$message,$headers);
+$mail->SMTPSecure = 'tls';
+$mail->Port = 587;
 
+$mail->setFrom('jraldybaco@gmail.com', 'IoT Room Monitor');
+$mail->addAddress('20231782@nbsc.edu.ph');
+
+$mail->Subject = 'IoT Alert: AC Runtime Warning';
+
+$mail->Body = 'Air conditioner has been running for more than 4 hours in Lab 1. Please check the system.';
+
+$mail->send();
+
+echo "Email Sent";
+
+} catch (Exception $e) {
+
+echo "Email Failed";
 }
 
 ?>

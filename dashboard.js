@@ -107,6 +107,18 @@ alert("Selected "+r.name);
 
 });
 
+function checkRuntime(runtime){
+
+if(runtime >= 1){
+
+fetch("send_email.php")
+.then(response => response.text())
+.then(data => console.log(data));
+
+}
+
+}
+
 
 function updateStatus(){
 
@@ -164,16 +176,11 @@ if(room.acStart){
 
 let diff=(new Date()-room.acStart)/60000;
 
-let hours=Math.floor(diff/60);
-let minutes=Math.floor(diff%60);
-
-if(hours>0){
-runtime=hours+" hrs "+minutes+" mins";
+if(diff<60){
+runtime=diff.toFixed(1)+" min";
 }else{
-runtime=minutes+" mins";
+runtime=(diff/60).toFixed(2)+" hrs";
 }
-
-
 
 }
 
