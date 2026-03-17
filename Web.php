@@ -1,11 +1,11 @@
-<?php
+<?php 
 session_start();
 
 if(!isset($_SESSION['user'])){
 header("Location: login.html");
+exit();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +39,7 @@ IoT Room Monitor
 <ul class="navbar-nav ms-auto">
 
 <li class="nav-item">
-<a class="nav-link active fw-semibold" href="Web.html">Dashboard</a>
+<a class="nav-link active fw-semibold" href="Web.php">Dashboard</a>
 </li>
 
 <li class="nav-item">
@@ -56,8 +56,6 @@ IoT Room Monitor
 
 <div class="container mt-3">
 
-
-
 <div class="alert alert-secondary text-center shadow-sm">
 Last Update : <span id="lastUpdate">--</span>
 </div>
@@ -66,8 +64,6 @@ Last Update : <span id="lastUpdate">--</span>
 
 
 <section class="container-fluid px-4 my-4">
-
-
 
 <div class="row g-4">
 
@@ -79,7 +75,23 @@ Last Update : <span id="lastUpdate">--</span>
 Live Room Map
 </div>
 
-<div class="card-body p-0">
+<div class="card-body p-0 position-relative">
+
+<!-- ROOM SELECTOR -->
+<div id="roomSelector" class="bg-light shadow p-3"
+style="position:absolute; left:10px; top:10px; z-index:1000; width:150px; border-radius:8px;">
+
+<h6 class="text-center">Select Room</h6>
+
+<button class="btn btn-primary w-100 mb-2 roomBtn" data-room="room1">
+Lab 1
+</button>
+
+<button class="btn btn-primary w-100 roomBtn" data-room="room2">
+Lab 2
+</button>
+
+</div>
 
 <div id="map" style="height:510px;"></div>
 

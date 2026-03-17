@@ -90,7 +90,7 @@ r.circle=L.circle([r.lat,r.lng],{
 color:"yellow",
 fillColor:"yellow",
 fillOpacity:0.2,
-radius:15
+radius:10
 }).addTo(map);
 
 r.circle.bindPopup(r.name);
@@ -105,19 +105,26 @@ alert("Selected "+r.name);
 
 }
 
+
+/* ROOM BUTTON SELECTION */
+
+document.querySelectorAll(".roomBtn").forEach(btn=>{
+
+btn.addEventListener("click",function(){
+
+selectedRoom=this.dataset.room;
+
+let r=rooms[selectedRoom];
+
+map.setView([r.lat,r.lng],200);
+
+alert("Selected "+r.name);
+
 });
 
-function checkRuntime(runtime){
+});
 
-if(runtime >= 1){
-
-fetch("send_email.php")
-.then(response => response.text())
-.then(data => console.log(data));
-
-}
-
-}
+});
 
 
 function updateStatus(){
@@ -228,13 +235,8 @@ let zoneColor="yellow";
 if(roomTemp<=23){
 zoneColor="blue";
 }
-
 else if(roomTemp>=28){
 zoneColor="red";
-}
-
-else{
-zoneColor="yellow";
 }
 
 room.circle.setStyle({
@@ -280,8 +282,10 @@ runtime:runtime
 });
 
 }
+
+
 /* AUTO REFRESH */
 
 setInterval(function(){
 updateStatus();
-},30000);
+},60000);

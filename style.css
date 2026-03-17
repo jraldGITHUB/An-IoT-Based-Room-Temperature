@@ -132,3 +132,77 @@ color:#ef4444;
 font-size:32px;
 font-weight:bold;
 }
+
+#roomSelector{
+background:white;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+border:1px solid #e0e0e0;
+}
+
+
+/* ROOM SELECTOR TITLE */
+
+#roomSelector h6{
+font-weight:600;
+margin-bottom:10px;
+}
+
+
+/* ROOM BUTTONS */
+
+.roomBtn{
+font-size:14px;
+font-weight:500;
+border-radius:6px;
+transition:all 0.2s ease;
+}
+
+
+/* HOVER EFFECT */
+
+.roomBtn:hover{
+transform:scale(1.05);
+background:#0d6efd;
+color:white;
+}
+
+.roomBtn.active{
+background:#198754;
+border-color:#198754;
+color:white;
+}
+
+
+/* MAP */
+
+#map{
+border-radius:6px;
+}
+
+
+/* CARD STYLE */
+
+.card{
+border:none;
+border-radius:10px;
+}
+
+
+/* STATUS COLORS */
+
+#acStatus{
+font-size:28px;
+}
+
+#fanStatus{
+font-size:28px;
+}
+
+
+/* AIRCON RUNTIME */
+
+#acRuntime{
+font-weight:bold;
+font-size:20px;
+}

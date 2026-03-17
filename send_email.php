@@ -22,7 +22,7 @@ $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
 
 $mail->setFrom('jraldybaco@gmail.com', 'IoT Room Monitor');
-$mail->addAddress('20231782@nbsc.edu.ph');
+$mail->addAddress('cabangjunmeldeso@gmail.com');
 
 $mail->Subject = 'IoT Alert: AC Runtime Warning';
 
