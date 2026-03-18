@@ -1,11 +1,3 @@
-<?php
-session_start();
-
-if(!isset($_SESSION['user'])){
-header("Location: login.html");
-}
-?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +31,7 @@ IoT Room Monitor
 <ul class="navbar-nav ms-auto">
 
 <li class="nav-item">
-<a class="nav-link active fw-semibold" href="Web.html">Dashboard</a>
+<a class="nav-link active fw-semibold" href="Web.php">Dashboard</a>
 </li>
 
 <li class="nav-item">
