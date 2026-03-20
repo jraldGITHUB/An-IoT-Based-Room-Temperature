@@ -1,7 +1,7 @@
 <?php
 
-include "db.php";
-include "send_email.php";
+include "../../../db.php";
+include "../../../send_email.php";
 
 if(strpos($runtime,"hrs") !== false){
 

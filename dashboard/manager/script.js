@@ -38,40 +38,43 @@ callback:value=>value+"°C"
 });
 
 
-/* ROOM DATA */
+/* ROOMS OBJECT */
 
-const rooms={
-
-room1:{
-name:"Lab 1",
-lat:8.359612,
-lng:124.869155,
-temp:0,
-temps:[],
-circle:null,
-acStart:null
-},
-
-room2:{
-name:"Lab 2",
-lat:8.359656,
-lng:124.869166,
-temp:0,
-temps:[],
-circle:null,
-acStart:null
-}
-
-};
-
-let selectedRoom="room1";
-
-
-/* MAP */
-
+let rooms = {};
+let selectedRoom = null;
 let map;
 
-document.addEventListener("DOMContentLoaded",function(){
+
+/* LOAD ROOMS FROM DATABASE */
+
+fetch("get_rooms.php")
+.then(response => response.json())
+.then(data => {
+
+data.forEach(room => {
+
+let key = "room"+room.id;
+
+rooms[key] = {
+name: room.room_name,
+lat: parseFloat(room.latitude),
+lng: parseFloat(room.longitude),
+temp:0,
+temps:[],
+circle:null,
+acStart:null
+};
+
+});
+
+initMap();
+
+});
+
+
+/* MAP INITIALIZATION */
+
+function initMap(){
 
 map=L.map('map').setView([8.359634,124.869002],200);
 
@@ -84,9 +87,9 @@ attribution:'© OpenStreetMap'
 
 for(let key in rooms){
 
-let r=rooms[key];
+let r = rooms[key];
 
-r.circle=L.circle([r.lat,r.lng],{
+r.circle = L.circle([r.lat,r.lng],{
 color:"yellow",
 fillColor:"yellow",
 fillOpacity:0.2,
@@ -97,15 +100,22 @@ r.circle.bindPopup(r.name);
 
 r.circle.on("click",function(){
 
-selectedRoom=key;
+selectedRoom = key;
 
-alert("Selected "+r.name);
+document.getElementById("roomName").textContent = r.name;
 
 });
 
 }
 
-});
+/* SET DEFAULT ROOM */
+
+selectedRoom = Object.keys(rooms)[0];
+
+}
+
+
+/* EMAIL ALERT */
 
 function checkRuntime(runtime){
 
@@ -120,9 +130,13 @@ fetch("send_email.php")
 }
 
 
+/* UPDATE SENSOR STATUS */
+
 function updateStatus(){
 
-let room=rooms[selectedRoom];
+if(!selectedRoom) return;
+
+let room = rooms[selectedRoom];
 
 const tempEl=document.getElementById("temp");
 const acEl=document.getElementById("acStatus");
@@ -134,7 +148,7 @@ const runtimeEl=document.getElementById("acRuntime");
 const roomName=document.getElementById("roomName");
 
 
-/* RANDOM TEMP */
+/* RANDOM TEMPERATURE (SIMULATION) */
 
 const roomTemp=Math.floor(Math.random()*8)+23;
 const exhaustTemp=roomTemp-Math.floor(Math.random()*5);
@@ -145,7 +159,7 @@ room.temps.push(roomTemp);
 
 if(room.temps.length>20){
 room.temps.shift();
-}
+}   
 
 
 /* TEMPERATURE STATISTICS */
@@ -160,7 +174,7 @@ const fanStatus=roomTemp>=26?"ON":"OFF";
 const acStatus=exhaustTemp<=24?"ON":"OFF";
 
 
-/* AIRCON TIME TRACKING */
+/* AIRCON RUNTIME */
 
 if(acStatus==="ON" && !room.acStart){
 room.acStart=new Date();
@@ -187,7 +201,7 @@ runtime=(diff/60).toFixed(2)+" hrs";
 runtimeEl.textContent=runtime;
 
 
-/* DASHBOARD */
+/* DASHBOARD UPDATE */
 
 roomName.textContent=room.name;
 
@@ -221,18 +235,16 @@ chartData.shift();
 tempChart.update();
 
 
-/* HEATMAP TEMPERATURE COLOR */
+/* HEATMAP COLOR */
 
 let zoneColor="yellow";
 
 if(roomTemp<=23){
 zoneColor="blue";
 }
-
 else if(roomTemp>=28){
 zoneColor="red";
 }
-
 else{
 zoneColor="yellow";
 }
@@ -257,7 +269,7 @@ const now=new Date();
 document.getElementById("lastUpdate").innerText=now.toLocaleTimeString();
 
 
-/* SAVE LOG */
+/* SAVE LOGS */
 
 fetch("save_logs.php",{
 method:"POST",
@@ -276,10 +288,11 @@ exhaustFan:fanStatus,
 runtime:runtime
 
 })
-
 });
 
 }
+
+
 /* AUTO REFRESH */
 
 setInterval(function(){

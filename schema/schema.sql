@@ -6,10 +6,11 @@ role ENUM('admin','manager','user')
 );
 
 CREATE TABLE rooms (
-    room_id INT AUTO_INCREMENT PRIMARY KEY,
-    room_name VARCHAR(100) NOT NULL,
-    latitude DECIMAL(10,6),
-    longitude DECIMAL(10,6)
+id INT AUTO_INCREMENT PRIMARY KEY,
+room_name VARCHAR(100) NOT NULL,
+latitude DECIMAL(10,6) NOT NULL,
+longitude DECIMAL(10,6) NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE devices (

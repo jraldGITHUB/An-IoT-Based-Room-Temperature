@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($_SESSION['username'])){
-    header("Location: ../login/index.php");
+    header("Location: ../../login/index.php");
     exit();
 }
 ?>
@@ -45,6 +45,10 @@ IoT Room Monitor
 
 <li class="nav-item">
 <a class="nav-link" href="../manager/logs_page/index.html">Logs</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="../manager/add_monitor_rooms/index.php">Add Rooms</a>
 </li>
 
 <a class="btn btn-danger ms-3" href="../../login/logout.php">Logout</a>

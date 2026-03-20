@@ -1,0 +1,70 @@
+/* DARK BACKGROUND */
+body {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+/* NAVBAR */
+.custom-navbar {
+    background: #020617;
+    border-bottom: 1px solid #1e293b;
+}
+
+.navbar-brand {
+    color: #38bdf8 !important;
+}
+
+.nav-link {
+    color: #cbd5f5 !important;
+    margin-right: 10px;
+}
+
+.nav-link:hover {
+    color: #38bdf8 !important;
+}
+
+.nav-link.active {
+    color: #f1f1f1 !important;
+    font-weight: 600;
+}
+
+/* FORM CARD */
+.form-card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* INPUT */
+.form-control {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+}
+
+.form-control:focus {
+    background: #0f172a;
+    color: #fff;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 0.2rem rgba(99,102,241,0.25);
+}
+
+/* BUTTON */
+.btn-success {
+    background: linear-gradient(135deg, #00fd5d, #16a34a);
+    border: none;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+/* ALERT */
+.alert-success {
+    background: #064e3b;
+    color: #d1fae5;
+    border: none;
+}
+
+

@@ -1,6 +1,6 @@
 <?php
 
-include "db.php";
+include "../../../db.php";
 
 $conn->query("DELETE FROM room_logs");
 
