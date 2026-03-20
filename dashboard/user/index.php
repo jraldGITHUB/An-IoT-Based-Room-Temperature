@@ -5,9 +5,7 @@ if(!isset($_SESSION['username'])){
     header("Location: ../../login/index.php");
     exit();
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +14,7 @@ if(!isset($_SESSION['username'])){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>IoT Room Monitor | Dashboard</title>
+<title>IoT Room Monitor | User Dashboard</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -29,11 +27,12 @@ if(!isset($_SESSION['username'])){
 
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg bg-light shadow-sm py-3">
 <div class="container">
 
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
-    <span class="navbar-toggler-icon"></span>
+<span class="navbar-toggler-icon"></span>
 </button>
 
 <a class="navbar-brand fw-bold fs-4" href="index.php">
@@ -41,19 +40,14 @@ IoT Room Monitor
 </a>
 
 <div class="collapse navbar-collapse">
-
 <ul class="navbar-nav ms-auto">
 
 <li class="nav-item">
-<a class="nav-link active fw-semibold" href="../manager/index.php">Dashboard</a>
+<a class="nav-link active fw-semibold" href="index.php">Dashboard</a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link" href="../manager/logs_page/index.php">Logs</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="../manager/add_monitor_rooms/index.php">Manage Rooms</a>
+<a class="nav-link" href="../user/logs_page/index.php">My Logs</a>
 </li>
 
 <li class="nav-item">
@@ -61,34 +55,28 @@ IoT Room Monitor
 </li>
 
 </ul>
-
 </div>
 </div>
 </nav>
 
+<!-- WELCOME -->
 <div class="container mt-3">
-
-
-
 <div class="alert alert-secondary text-center shadow-sm">
+Welcome, <?php echo $_SESSION['username']; ?> (User) <br>
 Last Update : <span id="lastUpdate">--</span>
 </div>
-
 </div>
-
 
 <section class="container-fluid px-4 my-4">
 
-
-
 <div class="row g-4">
 
+<!-- MAP -->
 <div class="col-lg-8">
-
 <div class="card shadow-sm">
 
 <div class="card-header bg-success text-white">
-Live Room Map
+Live Room Map (View Only)
 </div>
 
 <div class="card-body p-0">
@@ -110,14 +98,11 @@ Live Room Map
 </div>
 </div>
 
-
+<!-- RIGHT PANEL -->
 <div class="col-lg-4">
 
 <div class="card shadow-sm mb-3">
-
-<div class="card-header">
-Room Information
-</div>
+<div class="card-header">Room Information</div>
 
 <div class="card-body text-center">
 
@@ -138,23 +123,17 @@ Room Information
 </div>
 </div>
 
-
 <div class="card shadow-sm text-center mb-3">
 <div class="card-body">
-
 <h6 class="text-muted">Air Conditioner</h6>
 <h3 class="fw-bold" id="acStatus">--</h3>
-
 </div>
 </div>
-
 
 <div class="card shadow-sm text-center mb-3">
 <div class="card-body">
-
 <h6 class="text-muted">Exhaust Fan</h6>
 <h3 class="fw-bold" id="fanStatus">--</h3>
-
 </div>
 </div>
 
@@ -165,7 +144,7 @@ Refresh Sensor Data
 </div>
 </div>
 
-
+<!-- CHART -->
 <div class="row mt-4">
 
 <div class="col-12">
@@ -188,10 +167,10 @@ Temperature History
 
 </section>
 
-
-<script src="script.js"></script>
-
+<!-- SCRIPTS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="script.js" defer></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 include "../db.php";
 
@@ -6,13 +6,13 @@ $error = "";
 
 if(isset($_POST['login']))
 {
-    $username = $_POST['username'];
+    $username = mysqli_real_escape_string($conn,$_POST['username']);
     $password = md5($_POST['password']);
 
-    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password' LIMIT 1";
     $result = mysqli_query($conn,$sql);
 
-    if(mysqli_num_rows($result) == 1)
+    if($result && mysqli_num_rows($result) == 1)
     {
         $row = mysqli_fetch_assoc($result);
 
@@ -20,7 +20,7 @@ if(isset($_POST['login']))
         $_SESSION['username'] = $row['username'];
         $_SESSION['role'] = $row['role'];
 
-        // Redirect based on role
+        // ROLE REDIRECT
         if($row['role'] == 'admin')
         {
             header("Location: ../dashboard/admin/index.php");
@@ -29,7 +29,7 @@ if(isset($_POST['login']))
         {
             header("Location: ../dashboard/manager/index.php");
         }
-        else
+        elseif($row['role'] == 'user')
         {
             header("Location: ../dashboard/user/index.php");
         }

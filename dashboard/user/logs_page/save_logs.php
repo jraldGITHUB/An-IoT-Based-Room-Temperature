@@ -26,24 +26,7 @@ $row = $result->fetch_assoc();
 $room_id = $row['id'];
 
 
-// 💾 INSERT INTO sensor_logs
-$stmt2 = $conn->prepare("
-INSERT INTO sensor_logs 
-(room_id, room_temp, exhaust_temp, aircon_status, fan_status, runtime)
-VALUES (?,?,?,?,?,?)
-");
 
-$stmt2->bind_param(
-"iddsss",
-$room_id,
-$roomTemp,
-$exhaustTemp,
-$aircon,
-$fan,
-$runtime
-);
-
-$stmt2->execute();
 
 
 // 📧 EMAIL ALERT
