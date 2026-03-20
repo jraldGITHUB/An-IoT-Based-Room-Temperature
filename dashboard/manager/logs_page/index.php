@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['username'])){
+    header("Location: ../../../login/index.php");
+    exit();
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,58 +25,30 @@
 
 <body>
 
-
-<!-- NAVBAR -->
-
 <nav class="navbar navbar-expand-lg bg-light shadow-sm py-3">
-
 <div class="container">
 
 <a class="navbar-brand fw-bold fs-4" href="../index.php">
 IoT Room Monitor
 </a>
 
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-<span class="navbar-toggler-icon"></span>
-</button>
-
-<div class="collapse navbar-collapse" id="navbarNav">
-
+<div class="collapse navbar-collapse">
 <ul class="navbar-nav ms-auto">
-
-<li class="nav-item">
-<a class="nav-link" href="../../manager/index.php">Dashboard</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link active" href="#">Logs</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="../add_monitor_rooms/index.php">Add Rooms</a>
-</li>
-
-<a class="btn btn-danger ms-3" href="../login/logout.php">Logout</a>
-
+<li class="nav-item"><a class="nav-link" href="../../manager/index.php">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link active" href="#">Logs</a></li>
+<li class="nav-item"><a class="nav-link" href="../add_monitor_rooms/index.php">Manage Rooms</a></li>
+<li class="nav-item"><a class="nav-link" href="../../../login/logout.php">Logout</a></li>
 </ul>
-
 </div>
 
 </div>
-
 </nav>
 
 <div class="text-center mb-3">
-
 <select id="roomFilter" class="form-select w-auto d-inline">
 <option value="all">All Rooms</option>
-<option value="Lab 1">Lab 1</option>
-<option value="Lab 2">Lab 2</option>
 </select>
-
 </div>
-
-<!-- LOG TABLE -->
 
 <section class="container my-5">
 
@@ -76,7 +59,6 @@ IoT Room Monitor
 <table class="table table-bordered table-hover text-center align-middle">
 
 <thead class="table-success">
-
 <tr>
 <th>Date</th>
 <th>Time</th>
@@ -85,38 +67,24 @@ IoT Room Monitor
 <th>Exhaust Temp (°C)</th>
 <th>Aircon Status</th>
 <th>Exhaust Fan</th>
+<th>Runtime</th> <!-- ✅ NEW -->
 </tr>
-
 </thead>
 
-<tbody id="logTable">
-
-</tbody>
+<tbody id="logTable"></tbody>
 
 </table>
 
 </div>
 
-
-<!-- ACTION BUTTONS -->
-
 <div class="text-center mt-4">
-
-<button class="btn btn-success" onclick="downloadCSV()">
-Download CSV
-</button>
-
-<button class="btn btn-danger ms-2" id="clearLogs">
-Clear Logs
-</button>
-
+<button class="btn btn-success" onclick="downloadCSV()">Download CSV</button>
+<button class="btn btn-danger ms-2" id="clearLogs">Clear Logs</button>
 </div>
 
 </section>
 
-
 <script src="script.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

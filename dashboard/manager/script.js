@@ -1,5 +1,7 @@
+// REFRESH BUTTON
 document.getElementById("refreshBtn").addEventListener("click", updateStatus);
 
+// CHART SETUP
 const ctx = document.getElementById("tempChart").getContext("2d");
 
 let chartLabels = [];
@@ -38,17 +40,15 @@ callback:value=>value+"°C"
 });
 
 
-/* ROOMS OBJECT */
-
+// ROOMS OBJECT
 let rooms = {};
 let selectedRoom = null;
 let map;
 
 
-/* LOAD ROOMS FROM DATABASE */
-
+// LOAD ROOMS FROM DB
 fetch("get_rooms.php")
-.then(response => response.json())
+.then(res => res.json())
 .then(data => {
 
 data.forEach(room => {
@@ -59,6 +59,8 @@ rooms[key] = {
 name: room.room_name,
 lat: parseFloat(room.latitude),
 lng: parseFloat(room.longitude),
+device_id: room.device_id,
+sensor: room.sensor_status === "OFF" ? "INACTIVE" : "ACTIVE",
 temp:0,
 temps:[],
 circle:null,
@@ -72,66 +74,74 @@ initMap();
 });
 
 
-/* MAP INITIALIZATION */
-
+// MAP INIT
 function initMap(){
 
-map=L.map('map').setView([8.359634,124.869002],200);
+map = L.map('map').setView([8.359634,124.869002],20);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 attribution:'© OpenStreetMap'
 }).addTo(map);
 
 
-/* CREATE ROOM CIRCLES */
-
+// CREATE ROOMS
 for(let key in rooms){
 
 let r = rooms[key];
 
+let color = r.sensor === "ACTIVE" ? "yellow" : "gray";
+
 r.circle = L.circle([r.lat,r.lng],{
-color:"yellow",
-fillColor:"yellow",
-fillOpacity:0.2,
+color:color,
+fillColor:color,
+fillOpacity:0.3,
 radius:15
 }).addTo(map);
 
-r.circle.bindPopup(r.name);
 
+// POPUP
+r.circle.bindPopup(`
+<b>${r.name}</b><br>
+Sensor: ${r.sensor}<br>
+<button onclick="toggleSensor(${r.device_id})">Toggle Sensor</button>
+`);
+
+
+// CLICK SELECT
 r.circle.on("click",function(){
-
 selectedRoom = key;
-
 document.getElementById("roomName").textContent = r.name;
-
 });
 
 }
 
-/* SET DEFAULT ROOM */
-
+// DEFAULT ROOM
 selectedRoom = Object.keys(rooms)[0];
 
 }
 
 
-/* EMAIL ALERT */
+// TOGGLE SENSOR (NO RELOAD)
+function toggleSensor(id){
 
-function checkRuntime(runtime){
+fetch("add_monitor_rooms/toggle_device.php?id="+id)
+.then(()=>{
 
-if(runtime >= 1){
+// update locally
+for(let key in rooms){
+if(rooms[key].device_id == id){
+rooms[key].sensor = (rooms[key].sensor === "ACTIVE") ? "INACTIVE" : "ACTIVE";
+}
+}
 
-fetch("send_email.php")
-.then(response => response.text())
-.then(data => console.log(data));
+updateStatus();
+
+});
 
 }
 
-}
 
-
-/* UPDATE SENSOR STATUS */
-
+// UPDATE STATUS
 function updateStatus(){
 
 if(!selectedRoom) return;
@@ -148,34 +158,50 @@ const runtimeEl=document.getElementById("acRuntime");
 const roomName=document.getElementById("roomName");
 
 
-/* RANDOM TEMPERATURE (SIMULATION) */
+// 🚨 SENSOR OFF
+if(room.sensor === "INACTIVE"){
 
-const roomTemp=Math.floor(Math.random()*8)+23;
-const exhaustTemp=roomTemp-Math.floor(Math.random()*5);
+tempEl.textContent="--";
+avgEl.textContent="--";
+minEl.textContent="--";
+maxEl.textContent="--";
 
-room.temp=roomTemp;
+acEl.textContent="OFF";
+fanEl.textContent="OFF";
+runtimeEl.textContent="Sensor OFF";
 
+room.circle.setStyle({
+color:"gray",
+fillColor:"gray",
+fillOpacity:0.3
+});
+
+return; // STOP EVERYTHING
+}
+
+
+// SIMULATION
+const roomTemp = Math.floor(Math.random()*8)+23;
+const exhaustTemp = roomTemp - Math.floor(Math.random()*5);
+
+room.temp = roomTemp;
 room.temps.push(roomTemp);
 
 if(room.temps.length>20){
 room.temps.shift();
-}   
+}
 
 
-/* TEMPERATURE STATISTICS */
+// STATS
+let avgTemp = (room.temps.reduce((a,b)=>a+b,0)/room.temps.length).toFixed(1);
+let minTemp = Math.min(...room.temps);
+let maxTemp = Math.max(...room.temps);
 
-let avgTemp=(room.temps.reduce((a,b)=>a+b,0)/room.temps.length).toFixed(1);
-
-let minTemp=Math.min(...room.temps);
-let maxTemp=Math.max(...room.temps);
-
-
-const fanStatus=roomTemp>=26?"ON":"OFF";
-const acStatus=exhaustTemp<=24?"ON":"OFF";
+const fanStatus = roomTemp>=26 ? "ON" : "OFF";
+const acStatus = exhaustTemp<=24 ? "ON" : "OFF";
 
 
-/* AIRCON RUNTIME */
-
+// RUNTIME
 if(acStatus==="ON" && !room.acStart){
 room.acStart=new Date();
 }
@@ -187,22 +213,14 @@ room.acStart=null;
 let runtime="0 min";
 
 if(room.acStart){
-
 let diff=(new Date()-room.acStart)/60000;
-
-if(diff<60){
-runtime=diff.toFixed(1)+" min";
-}else{
-runtime=(diff/60).toFixed(2)+" hrs";
-}
-
+runtime = diff<60 ? diff.toFixed(1)+" min" : (diff/60).toFixed(2)+" hrs";
 }
 
 runtimeEl.textContent=runtime;
 
 
-/* DASHBOARD UPDATE */
-
+// UI
 roomName.textContent=room.name;
 
 tempEl.textContent=roomTemp+" °C";
@@ -213,15 +231,11 @@ maxEl.textContent=maxTemp+" °C";
 acEl.textContent=acStatus;
 fanEl.textContent=fanStatus;
 
-
-/* COLORS */
-
 acEl.style.color=acStatus==="ON"?"red":"green";
 fanEl.style.color=fanStatus==="ON"?"orange":"gray";
 
 
-/* CHART */
-
+// CHART
 const time=new Date().toLocaleTimeString();
 
 chartLabels.push(time);
@@ -235,66 +249,77 @@ chartData.shift();
 tempChart.update();
 
 
-/* HEATMAP COLOR */
-
+// HEATMAP COLOR (ONLY WHEN ACTIVE)
 let zoneColor="yellow";
 
-if(roomTemp<=23){
-zoneColor="blue";
-}
-else if(roomTemp>=28){
-zoneColor="red";
-}
-else{
-zoneColor="yellow";
-}
+if(roomTemp<=23) zoneColor="blue";
+else if(roomTemp>=28) zoneColor="red";
 
 room.circle.setStyle({
 color:zoneColor,
 fillColor:zoneColor
 });
 
-room.circle.bindPopup(
-"<b>"+room.name+"</b><br>"+
-"Temperature: "+roomTemp+"°C<br>"+
-"Aircon: "+acStatus+"<br>"+
-"Fan: "+fanStatus+"<br>"+
-"AC Runtime: "+runtime
-);
+
+// POPUP UPDATE
+room.circle.bindPopup(`
+<b>${room.name}</b><br>
+Sensor: ${room.sensor}<br>
+Temp: ${roomTemp}°C<br>
+AC: ${acStatus}<br>
+Fan: ${fanStatus}<br>
+Runtime: ${runtime}<br>
+<button onclick="toggleSensor(${room.device_id})">Toggle Sensor</button>
+`);
 
 
-/* UPDATE TIME */
-
-const now=new Date();
-document.getElementById("lastUpdate").innerText=now.toLocaleTimeString();
+// TIME
+document.getElementById("lastUpdate").innerText = new Date().toLocaleTimeString();
 
 
-/* SAVE LOGS */
-
-fetch("save_logs.php",{
+// SAVE LOGS
+fetch("logs_page/save_logs.php",{
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
+headers:{"Content-Type":"application/json"},
 body:JSON.stringify({
-
-date:now.toLocaleDateString(),
-time:now.toLocaleTimeString(),
+date:new Date().toLocaleDateString(),
+time:new Date().toLocaleTimeString(),
 room:room.name,
 roomTemp:roomTemp,
 exhaustTemp:exhaustTemp,
 aircon:acStatus,
 exhaustFan:fanStatus,
 runtime:runtime
-
 })
 });
 
 }
 
 
-/* AUTO REFRESH */
+// AUTO REFRESH STATUS
+setInterval(updateStatus,30000);
 
-setInterval(function(){
-updateStatus();
-},30000);
+
+// AUTO REFRESH SENSOR FROM DB
+function refreshSensors(){
+
+fetch("get_rooms.php")
+.then(res => res.json())
+.then(data => {
+
+data.forEach(room => {
+
+let key = "room"+room.id;
+
+if(rooms[key]){
+rooms[key].sensor = room.sensor_status === "OFF" ? "INACTIVE" : "ACTIVE";
+}
+
+});
+
+});
+
+}
+
+// every 5 sec sync
+setInterval(refreshSensors,5000);l

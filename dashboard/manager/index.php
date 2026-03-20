@@ -5,6 +5,7 @@ if(!isset($_SESSION['username'])){
     header("Location: ../../login/index.php");
     exit();
 }
+
 ?>
 
 
@@ -31,6 +32,10 @@ if(!isset($_SESSION['username'])){
 <nav class="navbar navbar-expand-lg bg-light shadow-sm py-3">
 <div class="container">
 
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
 <a class="navbar-brand fw-bold fs-4" href="index.php">
 IoT Room Monitor
 </a>
@@ -44,14 +49,16 @@ IoT Room Monitor
 </li>
 
 <li class="nav-item">
-<a class="nav-link" href="../manager/logs_page/index.html">Logs</a>
+<a class="nav-link" href="../manager/logs_page/index.php">Logs</a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link" href="../manager/add_monitor_rooms/index.php">Add Rooms</a>
+<a class="nav-link" href="../manager/add_monitor_rooms/index.php">Manage Rooms</a>
 </li>
 
-<a class="btn btn-danger ms-3" href="../../login/logout.php">Logout</a>
+<li class="nav-item">
+<a class="nav-link" href="../../login/logout.php">Logout</a>
+</li>
 
 </ul>
 

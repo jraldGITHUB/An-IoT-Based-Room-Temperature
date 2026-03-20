@@ -1,9 +1,7 @@
 <?php
-
 include "../../../db.php";
 
-$conn->query("DELETE FROM room_logs");
+$conn->query("TRUNCATE TABLE sensor_logs");
 
 echo "cleared";
-
 ?>

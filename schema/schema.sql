@@ -13,47 +13,23 @@ longitude DECIMAL(10,6) NOT NULL,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE devices (
-    device_id INT AUTO_INCREMENT PRIMARY KEY,
-    device_name VARCHAR(100),
-    device_type VARCHAR(50),
+CREATE TABLE room_sensors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     room_id INT,
-    status VARCHAR(20) DEFAULT 'ACTIVE',
-
-    CONSTRAINT fk_device_room
-    FOREIGN KEY (room_id) REFERENCES rooms(room_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-);  
+    sensor_status ENUM('ON','OFF') DEFAULT 'ON',
+    FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
+);
 
 CREATE TABLE sensor_logs (
-    log_id INT AUTO_INCREMENT PRIMARY KEY,
-    device_id INT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    recorded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    room_temp FLOAT,
+    exhaust_temp FLOAT,
+    aircon_status ENUM('ON','OFF'),
+    fan_status ENUM('ON','OFF'),
+    runtime VARCHAR(50),
 
-    temperature DECIMAL(5,2),
-    exhaust_temp DECIMAL(5,2),
-
-    aircon_status VARCHAR(10),
-    fan_status VARCHAR(10),
-    runtime VARCHAR(20),
-
-    log_date DATE,
-    log_time TIME,
-
-    CONSTRAINT fk_sensor_device
-    FOREIGN KEY (device_id) REFERENCES devices(device_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+    FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
 );
 
-CREATE TABLE device_logs (
-    log_id INT AUTO_INCREMENT PRIMARY KEY,
-    device_id INT,
-    status VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_device_logs_device
-    FOREIGN KEY (device_id) REFERENCES devices(device_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-);
