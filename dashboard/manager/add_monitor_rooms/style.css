@@ -1,16 +1,24 @@
 *{box-sizing:border-box}
 body{background:#0f172a;font-family:'Segoe UI',Arial,sans-serif;color:#e2e8f0;min-height:100vh}
+
+/* NAVBAR */
 .navbar{background:#020617 !important;border-bottom:1px solid #1e293b}
 .navbar-brand{color:#38bdf8 !important;font-weight:700;font-size:18px}
 .nav-link{color:#94a3b8 !important;font-size:13.5px;padding:6px 12px !important;border-radius:6px;transition:color .15s,background .15s}
 .nav-link:hover{color:#fff !important;background:#1e293b}
 .nav-link.active{color:#fff !important;background:#1e293b;font-weight:600}
+
+/* PAGE */
 .page-wrapper{max-width:1400px;margin:0 auto;padding:28px 20px}
 .page-title{font-size:22px;font-weight:600;color:#f1f5f9;margin:0 0 24px}
+
+/* PANELS */
 .panel{background:#1e293b;border-radius:14px;border:1px solid #243044;overflow:hidden;height:100%}
 .panel-header{padding:16px 20px;border-bottom:1px solid #243044;background:#182234}
 .panel-header h5{margin:0;font-size:15px;font-weight:600;color:#f1f5f9}
 .panel-body{padding:20px}
+
+/* FORM */
 .form-label{font-size:13px;color:#94a3b8;margin-bottom:5px;display:block}
 .form-control{background:#0f172a;border:1px solid #334155;color:#e2e8f0;height:42px;border-radius:8px;font-size:14px;padding:0 12px;width:100%;outline:none;transition:border-color .15s}
 .form-control:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.12)}
@@ -19,18 +27,27 @@ body{background:#0f172a;font-family:'Segoe UI',Arial,sans-serif;color:#e2e8f0;mi
 .btn-add:hover{background:#0284c7}
 .btn-add:active{transform:scale(.98)}
 .alert-success-custom{background:#052e16;border:1px solid #14532d;color:#4ade80;padding:10px 14px;border-radius:8px;font-size:13.5px;margin-bottom:16px}
+
+/* SENSOR TABLE */
 .table{width:100%;border-collapse:collapse;font-size:13.5px;margin:0}
 .table thead{background:#0f172a}
 .table thead th{padding:10px 14px;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748b;border-bottom:1px solid #243044}
 .table tbody tr{border-bottom:1px solid #1e3050;transition:background .12s}
 .table tbody tr:last-child{border-bottom:none}
 .table tbody tr:hover{background:#243350}
-.table tbody td{padding:11px 14px;color:#cbd5e1;vertical-align:middle}
+.table tbody td{padding:11px 14px;color:#000000;vertical-align:middle}
 .room-name{font-weight:600;color:#e2e8f0}
 .badge-on{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600;background:#052e16;color:#4ade80;border:1px solid #14532d}
 .badge-off{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600;background:#1c1917;color:#78716c;border:1px solid #292524}
 .btn-toggle{background:#1e3a5f;color:#60a5fa;border:1px solid #1e40af;padding:5px 14px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;transition:background .15s}
 .btn-toggle:hover{background:#1e40af;color:#bfdbfe}
+
+/* MAP */
 #map{height:400px;width:100%;border-radius:10px;border:1px solid #243044}
 .map-hint{font-size:12px;color:#64748b;margin-top:8px;text-align:center}
-@media(max-width:768px){.page-wrapper{padding:20px 14px}#map{height:280px}}
+
+/* MOBILE */
+@media(max-width:768px){
+    .page-wrapper{padding:20px 14px}
+    #map{height:280px}
+}
