@@ -1,7 +1,7 @@
 <?php
 
 $host = "localhost";
-$user = "";
+$user = "root";
 $pass = "";
 $db   = "iot_room_monitor";
 
