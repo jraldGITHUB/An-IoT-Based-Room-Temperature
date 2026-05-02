@@ -1,0 +1,47 @@
+*{box-sizing:border-box}
+body{background:#0f172a;font-family:'Segoe UI',Arial,sans-serif;color:#e2e8f0;min-height:100vh}
+
+/* NAVBAR */
+.navbar{background:#020617 !important;border-bottom:1px solid #1e293b}
+.navbar-brand{color:#38bdf8 !important;font-weight:700;font-size:18px}
+.nav-link{color:#94a3b8 !important;font-size:13.5px;padding:6px 12px !important;border-radius:6px;transition:color .15s,background .15s}
+.nav-link:hover{color:#fff !important;background:#1e293b}
+.nav-link.active{color:#fff !important;background:#1e293b;font-weight:600}
+
+/* PAGE */
+.page-wrapper{max-width:1200px;margin:0 auto;padding:32px 20px}
+.page-title{font-size:22px;font-weight:600;color:#f1f5f9;margin:0 0 24px}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.kpi-card{background:#1e293b;border-radius:12px;border:1px solid #243044;padding:18px 20px}
+.kpi-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:8px}
+.kpi-value{font-size:28px;font-weight:700;color:#f1f5f9;line-height:1}
+.kpi-value.blue{color:#38bdf8}
+.kpi-value.green{color:#4ade80}
+.kpi-value.orange{color:#fb923c}
+
+/* TABLE PANEL */
+.panel{background:#1e293b;border-radius:14px;border:1px solid #243044;overflow:hidden}
+.panel-header{padding:16px 20px;border-bottom:1px solid #243044;background:#182234;display:flex;align-items:center;justify-content:space-between}
+.panel-header h5{margin:0;font-size:15px;font-weight:600;color:#f1f5f9}
+.panel-badge{font-size:11.5px;background:#0f172a;color:#64748b;border:1px solid #334155;padding:3px 10px;border-radius:20px}
+.table{width:100%;border-collapse:collapse;font-size:13.5px;margin:0}
+.table thead{background:#0f172a}
+.table thead th{padding:11px 16px;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748b;border-bottom:1px solid #243044;white-space:nowrap}
+.table tbody tr{border-bottom:1px solid #1e3050;transition:background .12s}
+.table tbody tr:last-child{border-bottom:none}
+.table tbody tr:hover{background:#243350}
+.table tbody td{padding:12px 16px;color:#000000;vertical-align:middle}
+.td-user{font-weight:600;color:#e2e8f0}
+.td-action{color:#38bdf8;font-weight:500}
+.td-date{color:#64748b;font-size:12.5px;white-space:nowrap}
+
+/* MOBILE */
+@media(max-width:768px){
+    .page-wrapper{padding:20px 14px}
+    .kpi-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+    .kpi-grid{grid-template-columns:1fr}
+}

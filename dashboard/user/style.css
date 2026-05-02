@@ -1,144 +1,36 @@
-body{
-background:#0f172a;
-font-family:Arial, sans-serif;
-color:#e2e8f0;
-}
-
-/* Navbar */
-
-.navbar{
-background:#020617 !important;
-border-bottom:1px solid #1e293b;
-}
-
-.navbar-brand{
-color:#38bdf8 !important;
-}
-
-.nav-link{
-color:#e2e8f0 !important;
-}
-
-.nav-link:hover{
-color:#38bdf8 !important;
-
-
-}
-
-.nav-item{
-color: #38bdf8;
-
-}
-/* Cards */
-
-.card{
-background:#1e293b;
-border:none;
-border-radius:14px;
-box-shadow:0 10px 25px rgba(0,0,0,0.5);
-}
-
-.card-header{
-background:#334155;
-color:#f1f5f9;
-font-weight:bold;
-border-bottom:none;
-}
-
-
-.card-body{
-color:#e2e8f0;
-}
-
-p{
-color:#cbd5f5;
-}
-
-.text-muted{
-color:#94a3b8 !important;
-}
-
-h1,h2,h3,h4,h5,h6{
-color:#ffffff;
-}
-
-/* Alert */
-
-.alert{
-background:#1e293b;
-border:none;
-color:#e2e8f0;
-}
-
-/* Map */
-
-#map{
-height:400px;
-width:100%;
-border-radius:10px;
-border:1px solid #334155;
-}
-
-/* Chart */
-
-canvas{
-max-height:300px;
-}
-
-/* Buttons */
-
-.btn-success{
-background:#00ff5e;
-border:none;
-font-weight:bold;
-}
-
-.btn-success:hover{
-background:#16a34a;
-}
-
-/* Temperature */
-
-#temp{
-color:#ef4444;
-}
-
-/* Status */
-
-#acStatus{
-color:#22c55e;
-}
-
-#fanStatus{
-color:#38bdf8;
-}
-
-/* Runtime */
-
-#acRuntime{
-color:#facc15;
-font-weight:bold;
-}
-
-/* Hover effect */
-
-.card:hover{
-transform:translateY(-3px);
-transition:0.3s;
-}
-
-#acStatus{
-color:#22c55e;
-font-size:32px;
-font-weight:bold;
-}
-
-#fanStatus{
-color:#ef4444;
-font-size:32px;
-font-weight:bold;
-}
-.user-info{
-color: white !important;
-font-weight: 600;
-}
+*{box-sizing:border-box}
+body{background:#0f172a;font-family:'Segoe UI',Arial,sans-serif;color:#e2e8f0;min-height:100vh}
+.navbar{background:#020617 !important;border-bottom:1px solid #1e293b}
+.navbar-brand{color:#38bdf8 !important;font-weight:700;font-size:18px}
+.nav-link{color:#94a3b8 !important;font-size:13.5px;padding:6px 12px !important;border-radius:6px;transition:color .15s,background .15s}
+.nav-link:hover{color:#fff !important;background:#1e293b}
+.nav-link.active{color:#fff !important;background:#1e293b;font-weight:600}
+.page-wrapper{max-width:1400px;margin:0 auto;padding:24px 20px}
+.update-bar{background:#1e293b;border:1px solid #243044;border-radius:10px;padding:10px 18px;font-size:13px;color:#64748b;margin-bottom:24px;display:flex;align-items:center;gap:8px}
+.update-bar span{color:#38bdf8;font-weight:500}
+.panel{background:#1e293b;border-radius:14px;border:1px solid #243044;overflow:hidden}
+.panel-header{padding:14px 18px;border-bottom:1px solid #243044;background:#182234}
+.panel-header h5{margin:0;font-size:14px;font-weight:600;color:#f1f5f9;text-transform:uppercase;letter-spacing:.04em}
+#map{height:510px;width:100%}
+.map-legend{padding:10px 18px;display:flex;gap:20px;font-size:12px;color:#94a3b8;border-top:1px solid #243044;background:#182234}
+.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}
+.info-panel{padding:18px}
+.info-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:4px}
+.info-value{font-size:28px;font-weight:700;line-height:1;margin-bottom:16px;color:#f87171}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.stat-box{background:#0f172a;border-radius:10px;border:1px solid #243044;padding:12px 14px}
+.stat-box .stat-label{font-size:11.5px;color:#64748b;margin-bottom:4px}
+.stat-box .stat-val{font-size:18px;font-weight:600;color:#e2e8f0}
+.status-card{background:#0f172a;border-radius:10px;border:1px solid #243044;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.status-card .sc-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748b}
+.status-card .sc-value{font-size:22px;font-weight:700}
+.sc-on{color:#4ade80}
+.sc-off{color:#f87171}
+.btn-refresh{width:100%;background:#0369a1;color:#fff;border:none;height:44px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.btn-refresh:hover{background:#0284c7}
+.btn-refresh:active{transform:scale(.98)}
+.chart-panel{margin-top:24px}
+.chart-body{padding:18px}
+canvas{max-height:280px}
+@media(max-width:992px){#map{height:350px}}
+@media(max-width:768px){.page-wrapper{padding:16px 14px}#map{height:280px}.stat-row{grid-template-columns:1fr 1fr}}

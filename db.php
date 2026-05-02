@@ -1,14 +1,14 @@
 <?php
 
 $host = "localhost";
-$user = "root";
+$user = "";
 $pass = "";
-$db = "iot_room_monitor";
+$db   = "iot_room_monitor";
 
-$conn = mysqli_connect($host,$user,$pass,$db);
+$conn = mysqli_connect($host, $user, $pass, $db);
 
 if(!$conn){
-    die("Database connection failed");
+    die("Database connection failed: " . mysqli_connect_error());
 }
 
 ?>
