@@ -1,0 +1,57 @@
+*{box-sizing:border-box}
+body{background:#0f172a;font-family:'Segoe UI',Arial,sans-serif;color:#e2e8f0;min-height:100vh}
+
+/* NAVBAR */
+.navbar{background:#020617 !important;border-bottom:1px solid #1e293b}
+.navbar-brand{color:#38bdf8 !important;font-weight:700;font-size:18px}
+.nav-link{color:#94a3b8 !important;font-size:13.5px;padding:6px 12px !important;border-radius:6px;transition:color .15s,background .15s}
+.nav-link:hover{color:#fff !important;background:#1e293b}
+.nav-link.active{color:#fff !important;background:#1e293b;font-weight:600}
+
+/* PAGE */
+.page-wrapper{max-width:1200px;margin:0 auto;padding:32px 20px}
+.page-title{font-size:22px;font-weight:600;color:#f1f5f9;margin:0 0 24px}
+
+/* CARDS */
+.panel{background:#1e293b;border-radius:14px;border:1px solid #243044;overflow:hidden}
+.panel-header{padding:16px 20px;border-bottom:1px solid #243044;background:#182234}
+.panel-header h5{margin:0;font-size:15px;font-weight:600;color:#f1f5f9}
+.panel-body{padding:20px}
+
+/* FORM */
+.form-label{font-size:13px;color:#000000;margin-bottom:5px;display:block}
+.form-control,.form-select{background:#0f172a;border:1px solid #334155;color:#e2e8f0;height:42px;border-radius:8px;font-size:14px;padding:0 12px;width:100%;outline:none;transition:border-color .15s}
+.form-control:focus,.form-select:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.12)}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-color:#0f172a;padding-right:32px}
+.form-select option{background:#1e293b}
+.mb-3{margin-bottom:14px}
+.btn-create{width:100%;background:#0369a1;color:#fff;border:none;height:42px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
+.btn-create:hover{background:#0284c7}
+.btn-create:active{transform:scale(.98)}
+
+/* TABLE */
+.table{width:100%;border-collapse:collapse;font-size:13.5px;margin:0}
+.table thead{background:#0f172a}
+.table thead th{padding:11px 16px;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#64748b;border-bottom:1px solid #243044;white-space:nowrap}
+.table tbody tr{border-bottom:1px solid #1e3050;transition:background .12s}
+.table tbody tr:last-child{border-bottom:none}
+.table tbody tr:hover{background:#243350}
+.table tbody td{padding:12px 16px;color:#000000;vertical-align:middle}
+.td-username{font-weight:600;color:#e2e8f0}
+
+/* ROLE BADGES */
+.role-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
+.role-admin{background:#450a0a;color:#f87171;border:1px solid #7f1d1d}
+.role-manager{background:#0c1a4a;color:#60a5fa;border:1px solid #1e3a8a}
+.role-user{background:#1c1917;color:#a8a29e;border:1px solid #292524}
+
+/* DELETE BTN */
+.btn-del{background:#450a0a;color:#f87171;border:1px solid #7f1d1d;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn-del:hover{background:#7f1d1d;color:#fca5a5}
+.current-user{font-size:12px;color:#475569}
+
+/* MOBILE */
+@media(max-width:768px){
+    .page-wrapper{padding:20px 14px}
+    .row-layout{flex-direction:column}
+}
