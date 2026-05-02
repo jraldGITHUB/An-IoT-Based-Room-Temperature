@@ -11,10 +11,22 @@ if(isset($_POST['add_user'])){
     $username = trim($_POST['username']);
     $password = md5($_POST['password']);
     $role     = $_POST['role'];
+    $room_ids = isset($_POST['room_ids']) ? $_POST['room_ids'] : [];
 
     $stmt = $conn->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $username, $password, $role);
     $stmt->execute();
+
+    $new_user_id = $stmt->insert_id;
+
+    // INSERT USER ROOMS (only if role is user)
+    if($role === 'user' && !empty($room_ids)){
+        $assign = $conn->prepare("INSERT INTO user_rooms (user_id, room_id) VALUES (?, ?)");
+        foreach($room_ids as $room_id){
+            $assign->bind_param("ii", $new_user_id, $room_id);
+            $assign->execute();
+        }
+    }
 
     $admin_id = $_SESSION['user_id'];
     $action = "Create User";
@@ -46,6 +58,7 @@ if(isset($_GET['delete'])){
 }
 
 $users = $conn->query("SELECT * FROM users ORDER BY id DESC");
+$rooms = $conn->query("SELECT * FROM rooms ORDER BY room_name ASC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,9 +67,7 @@ $users = $conn->query("SELECT * FROM users ORDER BY id DESC");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IoT Room Monitor | Manage Accounts</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
@@ -90,23 +101,48 @@ $users = $conn->query("SELECT * FROM users ORDER BY id DESC");
 <div class="panel-header"><h5>Create Account</h5></div>
 <div class="panel-body">
 <form method="POST">
+
 <div class="mb-3">
     <label class="form-label">Username</label>
     <input type="text" name="username" class="form-control" placeholder="Enter username" required>
 </div>
+
 <div class="mb-3">
     <label class="form-label">Password</label>
     <input type="password" name="password" class="form-control" placeholder="Enter password" required>
 </div>
+
 <div class="mb-3">
     <label class="form-label">Role</label>
-    <select name="role" class="form-select" required>
+    <select name="role" class="form-select" id="roleSelect" required onchange="toggleRoomAssign(this.value)">
         <option value="">Select role</option>
         <option value="admin">Admin</option>
         <option value="manager">Manager</option>
         <option value="user">User</option>
     </select>
 </div>
+
+<!-- ASSIGN ROOMS - only shows when role is User -->
+<div class="mb-3" id="assignRoomSection" style="display:none;">
+    <label class="form-label">Assign Rooms</label>
+    <?php if($rooms->num_rows > 0): ?>
+    <select name="room_ids[]" class="form-select" multiple style="min-height:120px;background-color:#0f172a;color:#e2e8f0;border:1px solid #243044;">
+        <?php 
+        $rooms->data_seek(0);
+        while($room = $rooms->fetch_assoc()): ?>
+            <option value="<?= $room['id']; ?>" style="background-color:#0f172a;color:#e2e8f0;">
+                <?= htmlspecialchars($room['room_name']); ?>
+            </option>
+        <?php endwhile; ?>
+    </select>
+    <p class="select-hint">Hold Ctrl / Cmd to select multiple rooms.</p>
+    <?php else: ?>
+    <div style="background:#0f172a;border:1px solid #243044;border-radius:8px;padding:12px;color:#f87171;font-size:13px;">
+        ⚠️ No rooms found. Please <a href="../add_monitor_rooms/index.php" style="color:#38bdf8;">add rooms</a> first.
+    </div>
+    <?php endif; ?>
+</div>
+
 <button type="submit" name="add_user" class="btn-create">Create Account</button>
 </form>
 </div>
@@ -124,6 +160,7 @@ $users = $conn->query("SELECT * FROM users ORDER BY id DESC");
     <th>ID</th>
     <th>Username</th>
     <th>Role</th>
+    <th>Rooms</th>
     <th style="text-align:right">Action</th>
 </tr>
 </thead>
@@ -136,6 +173,25 @@ $users = $conn->query("SELECT * FROM users ORDER BY id DESC");
     <span class="role-badge role-<?php echo $row['role']; ?>">
         <?php echo ucfirst($row['role']); ?>
     </span>
+</td>
+<td>
+    <?php
+    $uid = $row['id'];
+    $assigned = $conn->query("
+        SELECT r.room_name FROM rooms r
+        INNER JOIN user_rooms ur ON ur.room_id = r.id
+        WHERE ur.user_id = $uid
+    ");
+    if($assigned->num_rows > 0){
+        $room_names = [];
+        while($r = $assigned->fetch_assoc()){
+            $room_names[] = htmlspecialchars($r['room_name']);
+        }
+        echo '<span class="room-tags">' . implode(', ', $room_names) . '</span>';
+    } else {
+        echo '<span class="no-rooms">—</span>';
+    }
+    ?>
 </td>
 <td style="text-align:right">
     <?php if($row['id'] != $_SESSION['user_id']): ?>
@@ -158,5 +214,16 @@ $users = $conn->query("SELECT * FROM users ORDER BY id DESC");
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Show assign rooms only when role is "user"
+function toggleRoomAssign(role) {
+    const section = document.getElementById('assignRoomSection');
+    if(role === 'user'){
+        section.style.display = 'block';
+    } else {
+        section.style.display = 'none';
+    }
+}
+</script>
 </body>
 </html>
